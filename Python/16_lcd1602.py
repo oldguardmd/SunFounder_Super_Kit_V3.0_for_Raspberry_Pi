@@ -263,4 +263,4 @@ if __name__ == '__main__':
 	except KeyboardInterrupt:
 		lcd.clear()
 		lcd.destroy()
-	
+		lcd.LCD_DISPLAYOFF()
