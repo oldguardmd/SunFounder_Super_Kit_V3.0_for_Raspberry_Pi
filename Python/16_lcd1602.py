@@ -261,7 +261,7 @@ if __name__ == '__main__':
 	try:
 		main()
 	except KeyboardInterrupt:
-		#Test2
+		#Test3
 		lcd.noDisplay()
 		lcd.clear()
 		lcd.destroy()
