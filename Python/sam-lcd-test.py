@@ -174,12 +174,17 @@ class LCD:
 		# Send command to LCD
 		self.delayMicroseconds(1000) # 1000 microsecond sleep
 		bits=bin(bits)[2:].zfill(8)
+		pint(f"Bits: {bits}")
 		self.GPIO.output(self.pin_rs, char_mode)
 		for pin in self.pins_db:
+			pring(f"\tPin: {pin}")
 			self.GPIO.output(pin, False)
 		for i in range(4):
+			print(f"\t\tBit {i}: {bits[i]}")
 			if bits[i] == "1":
+				print(f"\t\tWhat ever this is: {self.pins_db[::-1][i]}")
 				self.GPIO.output(self.pins_db[::-1][i], True)
+		print(f"Setting Pulse Enable")
 		self.pulseEnable()
 		for pin in self.pins_db:
 			self.GPIO.output(pin, False)
@@ -187,6 +192,7 @@ class LCD:
 			if bits[i] == "1":
 				self.GPIO.output(self.pins_db[::-1][i-4], True)
 		self.pulseEnable()
+		exit()
 
 	def delayMicroseconds(self, microseconds):
 		seconds = microseconds / float(1000000)	# divide microseconds by 1 million for seconds
