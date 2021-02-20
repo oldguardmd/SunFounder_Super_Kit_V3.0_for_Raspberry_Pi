@@ -7,19 +7,20 @@ class LCD:
         import RPi.GPIO as GPIO
         self.GPIO = GPIO
         GPIO.setmode(GPIO.BOARD)
-        self.pin_rs = pin_rs
-        self.pin_e = pin_e
-        self.pin_list = pin_list
+        GPIO.setwarnings(False)
+
+        self.pin_rs = pin_rs    #GPIO 27
+        self.pin_e = pin_e      #GPIO 22
+        self.pin_list = pin_list    #GPIO 25, 24, 23, 18
 
         self.full_pin_list = self.pin_list[:]
         self.full_pin_list.append(self.pin_e)
         self.full_pin_list.append(self.pin_rs)
-
-        print (self.full_pin_list)
-
-LCD()
-
-
-
+    
+    def main(self):
+        for pin in self.full_pin_list:
+            print(pin)
+            
 
 
+LCD().main()
