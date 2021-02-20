@@ -20,6 +20,7 @@ class LCD:
     def main(self):
         for pin in self.full_pin_list:
             print(pin)
+            self.GPIO.setup(pin, self.GPIO.OUT)
             
 
 
