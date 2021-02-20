@@ -177,7 +177,7 @@ class LCD:
 		print(f"Bits: {bits}")
 		self.GPIO.output(self.pin_rs, char_mode)
 		for pin in self.pins_db:
-			pring(f"\tPin: {pin}")
+			print(f"\tPin: {pin}")
 			self.GPIO.output(pin, False)
 		for i in range(4):
 			print(f"\t\tBit {i}: {bits[i]}")
