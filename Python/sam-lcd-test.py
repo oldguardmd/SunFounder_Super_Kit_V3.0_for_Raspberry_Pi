@@ -66,8 +66,8 @@ class LCD:
 
 			self.GPIO.setwarnings(False)
 			self.GPIO.setmode(GPIO.BCM)
-			#self.GPIO.setup(self.pin_e, GPIO.OUT)
-			#self.GPIO.setup(self.pin_rs, GPIO.OUT)
+			self.GPIO.setup(self.pin_e, GPIO.OUT)
+			self.GPIO.setup(self.pin_rs, GPIO.OUT)
 
 			
 			for pin in self.pins_db:
