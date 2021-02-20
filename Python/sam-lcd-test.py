@@ -64,6 +64,9 @@ class LCD:
 			self.used_gpio.append(pin_e)
 			self.used_gpio.append(pin_rs)
 
+			print(used_gpio)
+			exit()
+
 			self.GPIO.setwarnings(False)
 			self.GPIO.setmode(GPIO.BCM)
 			self.GPIO.setup(self.pin_e, GPIO.OUT)
