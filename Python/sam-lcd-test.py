@@ -174,7 +174,7 @@ class LCD:
 		# Send command to LCD
 		self.delayMicroseconds(1000) # 1000 microsecond sleep
 		bits=bin(bits)[2:].zfill(8)
-		pint(f"Bits: {bits}")
+		print(f"Bits: {bits}")
 		self.GPIO.output(self.pin_rs, char_mode)
 		for pin in self.pins_db:
 			pring(f"\tPin: {pin}")
