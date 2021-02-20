@@ -64,7 +64,7 @@ class LCD:
 			self.used_gpio.append(pin_e)
 			self.used_gpio.append(pin_rs)
 
-			print(used_gpio)
+			print(self.used_gpio)
 			exit()
 
 			self.GPIO.setwarnings(False)
