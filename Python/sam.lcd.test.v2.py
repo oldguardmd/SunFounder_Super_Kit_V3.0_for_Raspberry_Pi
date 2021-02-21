@@ -133,11 +133,11 @@ class LCD:
         self.write4bits(0x02, self.pin_rs_cmd)
         self.write4bits(0x03, self.pin_rs_cmd)
 
-        self.writexbits(0x00, self.pin_rs_cmd)
-        self.writexbits(0x06, self.pin_rs_cmd)
+        self.write4bits(0x00, self.pin_rs_cmd)
+        self.write4bits(0x06, self.pin_rs_cmd)
 
-        self.writexbits(0x05, self.pin_rs_data)
-        self.writexbits(0x03, self.pin_rs_data)
+        self.write4bits(0x05, self.pin_rs_data)
+        self.write4bits(0x03, self.pin_rs_data)
 
 
         sleep(.0005)
