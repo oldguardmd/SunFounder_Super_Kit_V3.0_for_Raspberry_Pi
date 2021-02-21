@@ -22,8 +22,12 @@ class LCD:
     matrix = 0x28             # 2 line 5x7 Matrix
     cursor_off = 0x0C         # Cursor Off
     cursor_on = 0x0E          # Cursor On
+
     #Time
     onesecond = 1000000 # Number of microseconds in a second
+
+    #Debugging Output
+    debug = True
 
     def __init__(self):
         import RPi.GPIO as GPIO
@@ -53,12 +57,16 @@ class LCD:
     
     def write4bits(self,fourBits):
         if fourBits[0] == 1:
+            print(f'Setting D4 to True') if self.debug==True else print(f'Setting D4 to False')
             self.GPIO.output(self.lcd_d4, True)
         if fourBits[1] == 1:
+            print(f'Setting D5 to True') if self.debug==True else print(f'Setting D5 to False')
             self.GPIO.output(self.lcd_d5, True)
         if fourBits[2] == 1:
+            print(f'Setting D6 to True') if self.debug==True else print(f'Setting D6 to False')
             self.GPIO.output(self.lcd_d6, True)
         if fourBits[3] == 1:
+            print(f'Setting D7 to True') if self.debug==True else print(f'Setting D7 to False')
             self.GPIO.output(self.lcd_d7, True)
     
     def enableChange(self):
