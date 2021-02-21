@@ -58,7 +58,7 @@ class LCD:
         return
     
     def write4bits(self, bits, mode):
-        forBits = bin(bits)[2:].zfill(4)   #Convert hex to a 8 bit binary number
+        fourBits = bin(bits)[2:].zfill(4)   #Convert hex to a 8 bit binary number
 
         #we need to set either commands or data.
         self.GPIO.output(self.pin_rs, mode)
