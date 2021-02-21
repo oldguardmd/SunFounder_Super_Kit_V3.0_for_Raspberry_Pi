@@ -60,22 +60,22 @@ class LCD:
     def write4bits(self,fourBits):
         print('\t\tStarting 4 bit write process')
         if self.debug: print(f'\t\tD4 value is {fourBits[0]}')
-        if int(fourBits[0]) == 1:
+        if int(fourBits[3]) == 1:
             if self.debug : print(f'\t\tSetting D4 to True')
             self.GPIO.output(self.lcd_d4, True)
         else:
             if self.debug : print(f'\t\tSetting D4 to False')
-        if int(fourBits[1]) == 1:
+        if int(fourBits[2]) == 1:
             if self.debug : print(f'\t\tSetting D5 to True')
             self.GPIO.output(self.lcd_d5, True)
         else:
             if self.debug : print(f'\t\tSetting D5 to False')
-        if int(fourBits[2]) == 1:
+        if int(fourBits[1]) == 1:
             if self.debug : print(f'\t\tSetting D6 to True')
             self.GPIO.output(self.lcd_d6, True)
         else:
             if self.debug : print(f'\t\tSetting D6 to False')
-        if int(fourBits[3]) == 1:
+        if int(fourBits[0]) == 1:
             if self.debug : print(f'\t\tSetting D7 to True')
             self.GPIO.output(self.lcd_d7, True)
         else:
