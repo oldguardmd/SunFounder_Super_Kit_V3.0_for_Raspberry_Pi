@@ -91,8 +91,8 @@ class LCD:
 
     def main(self):
         self.setAllPinsToOutput()
-        self.write4bits(self.initialize_stage1, self.pin_rs_cmd)
-        self.write4bits(self.initialize_stage2, self.pin_rs_cmd)
+        self.write8bits(self.initialize_stage1, self.pin_rs_cmd)
+        self.write8bits(self.initialize_stage2, self.pin_rs_cmd)
 
             
 
