@@ -84,11 +84,14 @@ class LCD:
     def enableChange(self):
         # This sets the enable flag so that the 1602 reads the change
         self.GPIO.output(self.pin_e, False)
-        sleep(1/self.onesecond) # Sleep one microsecond
+        sleep(0.0005)
+        #sleep(1/self.onesecond) # Sleep one microsecond
         self.GPIO.output(self.pin_e, True)
-        sleep(1/self.onesecond) # Sleep one microsecond
+        sleep(0.0005)
+        #sleep(1/self.onesecond) # Sleep one microsecond
         self.GPIO.output(self.pin_e, False)
-        sleep(1/self.onesecond) # Sleep one microsecond
+        sleep(0.0005)
+        #sleep(1/self.onesecond) # Sleep one microsecond
         return
 
     def write8bits(self, hex_bits,mode):
@@ -116,24 +119,28 @@ class LCD:
     def main(self):
         #These are parameters to start up the LCD
         self.setAllPinsToOutput()
-        if self.debug: print('Initializing Stage 1')
+        
+        #if self.debug: print('Initializing Stage 1')
+        #self.write8bits(self.LCD_initialize_stage1, self.pin_rs_cmd)
+
+        #if self.debug: print('Setting 4 Bit Mode')
+        #self.write8bits(self.LCD_set_4bit_mode, self.pin_rs_cmd)
+
+        #if self.debug: print('Setting matrix size')
+        #self.write8bits(self.LCD_matrix, self.pin_rs_cmd)
+
+        #if self.debug: print('Setting Cursor visibilty')
+        #self.write8bits(self.LCD_cursor_on, self.pin_rs_cmd)
+
+        #if self.debug: print('Shifting Cursor to the Right')
+        #self.write8bits(self.LCD_shift_cursor_right, self.pin_rs_cmd)
+
+        #if self.debug: print('Clearing the display')
+        #self.write8bits(self.LCD_clear_display, self.pin_rs_cmd)
+
         self.write8bits(self.LCD_initialize_stage1, self.pin_rs_cmd)
-
-        if self.debug: print('Setting 4 Bit Mode')
         self.write8bits(self.LCD_set_4bit_mode, self.pin_rs_cmd)
-
-        if self.debug: print('Setting matrix size')
-        self.write8bits(self.LCD_matrix, self.pin_rs_cmd)
-
-        if self.debug: print('Setting Cursor visibilty')
-        self.write8bits(self.LCD_cursor_on, self.pin_rs_cmd)
-
-        if self.debug: print('Shifting Cursor to the Right')
-        self.write8bits(self.LCD_shift_cursor_right, self.pin_rs_cmd)
-
-        if self.debug: print('Clearing the display')
-        self.write8bits(self.LCD_clear_display, self.pin_rs_cmd)
-
+        self.write8bits(0x0e, self.pin_rs_cmd)
         sleep(.0005)
         # Everything after this is what you want to display 
         
