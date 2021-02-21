@@ -17,12 +17,13 @@ class LCD:
     lcd_d7 = 12
 
     #Common Hex Values for 1602 operations
-    initialize_stage1 = 0x33
-    initialize_stage2 = 0x32
-    matrix = 0x28             # 2 line 5x7 Matrix
-    cursor_off = 0x0C         # Cursor Off
-    cursor_on = 0x0E          # Cursor On
-    shift_cursor_right = 0x06
+    LCD_initialize_stage1 = 0x33
+    LCD_set_4bit_mode = 0x32
+    LCD_matrix = 0x28             # 2 line 5x7 Matrix
+    LCD_cursor_off = 0x0C         # Cursor Off
+    LCD_cursor_on = 0x0E          # Cursor On
+    LCD_shift_cursor_right = 0x06
+    LCD_clear_display = 0x01
 
     #Time
     onesecond = 1000000 # Number of microseconds in a second
@@ -113,17 +114,30 @@ class LCD:
         return
 
     def main(self):
+        #These are parameters to start up the LCD
         self.setAllPinsToOutput()
         if self.debug: print('Initializing Stage 1')
-        self.write8bits(self.initialize_stage1, self.pin_rs_cmd)
-        if self.debug: print('Initializing Stage 2')
-        self.write8bits(self.initialize_stage2, self.pin_rs_cmd)
+        self.write8bits(self.LCD_initialize_stage1, self.pin_rs_cmd)
+
+        if self.debug: print('Setting 4 Bit Mode')
+        self.write8bits(self.LCD_set_4bit_mode, self.pin_rs_cmd)
+
         if self.debug: print('Setting matrix size')
-        self.write8bits(self.matrix, self.pin_rs_cmd)
-        if self.debug: print('Setting Cursor')
-        self.write8bits(self.cursor_on, self.pin_rs_cmd)
+        self.write8bits(self.LCD_matrix, self.pin_rs_cmd)
+
+        if self.debug: print('Setting Cursor visibilty')
+        self.write8bits(self.LCD_cursor_on, self.pin_rs_cmd)
+
         if self.debug: print('Shifting Cursor to the Right')
-        self.write8bits(self.shift_cursor_right, self.pin_rs_cmd)
+        self.write8bits(self.LCD_shift_cursor_right, self.pin_rs_cmd)
+
+        if self.debug: print('Clearing the display')
+        self.write8bits(self.LCD_clear_display, self.pin_rs_cmd)
+
+        sleep(.0005)
+        # Everything after this is what you want to display 
+        
+        self.write8bits(0x53, self.pin_rs_data)
 
             
 
