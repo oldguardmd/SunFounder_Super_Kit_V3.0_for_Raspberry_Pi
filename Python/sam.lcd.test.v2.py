@@ -80,9 +80,10 @@ class LCD:
         self.clear4bits()
 
         #Write high bits
+        print(f'writing: {bin_bits[4:]}')
         self.write4bits(fourBits=bin_bits[4:])
         self.enableChange()
-        
+        exit() 
         #Write low bits
         self.write4bits(fourBits=bin_bits[:4])
         self.enableChange()
