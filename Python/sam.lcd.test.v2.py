@@ -57,7 +57,12 @@ class LCD:
                 self.GPIO.output(pin,False)
         return
     
-    def write4bits(self,fourBits):
+    def write4bits(self, bits, mode):
+        forBits = bin(bits)[2:].zfill(4)   #Convert hex to a 8 bit binary number
+
+        #we need to set either commands or data.
+        self.GPIO.output(self.pin_rs, mode)
+
         print('\t\tStarting 4 bit write process')
         if self.debug: print(f'\t\tD4 value is {fourBits[3]}')
         if int(fourBits[3]) == 1:
@@ -97,28 +102,6 @@ class LCD:
         #sleep(1/self.onesecond) # Sleep one microsecond
         return
 
-    def write8bits(self, hex_bits,mode):
-        #to write 8 bits in 4 bit mode, we split the binary into 4 bits and send the sequentially
-        sleep(3000/1000000) # Wait to ensure previous change is completed
-        bin_bits = bin(hex_bits)[2:].zfill(8)   #Convert hex to a 8 bit binary number
-        
-        #we need to set either commands or data.
-        self.GPIO.output(self.pin_rs, mode)
-
-        #set all bits to false so they are off
-        self.clear4bits()
-
-        #Write high bits
-        if self.debug: print(f'\twriting: {bin_bits[:4]}')
-        self.write4bits(fourBits=bin_bits[:4])
-        self.enableChange()
-        #Write low bits
-        if self.debug: print(f'\twriting: {bin_bits[4:]}')
-        self.write4bits(fourBits=bin_bits[4:])
-        self.enableChange()
-
-        return
-
     def main(self):
         #These are parameters to start up the LCD
         self.setAllPinsToOutput()
@@ -141,9 +124,22 @@ class LCD:
         #if self.debug: print('Clearing the display')
         #self.write8bits(self.LCD_clear_display, self.pin_rs_cmd)
 
-        self.write8bits(self.LCD_initialize_stage1, self.pin_rs_cmd)
-        self.write8bits(self.LCD_set_4bit_mode, self.pin_rs_cmd)
-        self.write8bits(0x0e, self.pin_rs_cmd)
+
+        self.write4bits(0x03, self.pin_rs_cmd)
+        self.write4bits(0x03, self.pin_rs_cmd)
+        self.write4bits(0x03, self.pin_rs_cmd)
+        self.write4bits(0x02, self.pin_rs_cmd)
+        
+        self.write4bits(0x02, self.pin_rs_cmd)
+        self.write4bits(0x03, self.pin_rs_cmd)
+
+        self.writexbits(0x00, self.pin_rs_cmd)
+        self.writexbits(0x06, self.pin_rs_cmd)
+
+        self.writexbits(0x05, self.pin_rs_data)
+        self.writexbits(0x03, self.pin_rs_data)
+
+
         sleep(.0005)
         # Everything after this is what you want to display 
         
