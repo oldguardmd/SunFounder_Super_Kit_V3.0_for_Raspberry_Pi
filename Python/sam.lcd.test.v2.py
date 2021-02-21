@@ -22,6 +22,7 @@ class LCD:
     matrix = 0x28             # 2 line 5x7 Matrix
     cursor_off = 0x0C         # Cursor Off
     cursor_on = 0x0E          # Cursor On
+    shift_cursor_right = 0x06
 
     #Time
     onesecond = 1000000 # Number of microseconds in a second
@@ -56,18 +57,28 @@ class LCD:
         return
     
     def write4bits(self,fourBits):
-        if fourBits[0] == 1:
-            print(f'Setting D4 to True') if self.debug==True else print(f'Setting D4 to False')
+        print('\t\tStarting 4 bit write process')
+        if self.debug: print(f'\t\tD4 value is {fourBits[0]}')
+        if int(fourBits[0]) == 1:
+            if self.debug : print(f'\t\tSetting D4 to True')
             self.GPIO.output(self.lcd_d4, True)
-        if fourBits[1] == 1:
-            print(f'Setting D5 to True') if self.debug==True else print(f'Setting D5 to False')
+        else:
+            if self.debug : print(f'\t\tSetting D4 to False')
+        if int(fourBits[1]) == 1:
+            if self.debug : print(f'\t\tSetting D5 to True')
             self.GPIO.output(self.lcd_d5, True)
-        if fourBits[2] == 1:
-            print(f'Setting D6 to True') if self.debug==True else print(f'Setting D6 to False')
+        else:
+            if self.debug : print(f'\t\tSetting D5 to False')
+        if int(fourBits[2]) == 1:
+            if self.debug : print(f'\t\tSetting D6 to True')
             self.GPIO.output(self.lcd_d6, True)
-        if fourBits[3] == 1:
-            print(f'Setting D7 to True') if self.debug==True else print(f'Setting D7 to False')
+        else:
+            if self.debug : print(f'\t\tSetting D6 to False')
+        if int(fourBits[3]) == 1:
+            if self.debug : print(f'\t\tSetting D7 to True')
             self.GPIO.output(self.lcd_d7, True)
+        else:
+            if self.debug : print(f'\t\tSetting D7 to False')
     
     def enableChange(self):
         # This sets the enable flag so that the 1602 reads the change
@@ -91,11 +102,11 @@ class LCD:
         self.clear4bits()
 
         #Write high bits
-        print(f'writing: {bin_bits[4:]}')
+        if self.debug: print(f'\twriting: {bin_bits[4:]}')
         self.write4bits(fourBits=bin_bits[4:])
         self.enableChange()
         #Write low bits
-        print(f'writing: {bin_bits[:4]}')
+        if self.debug: print(f'\twriting: {bin_bits[:4]}')
         self.write4bits(fourBits=bin_bits[:4])
         self.enableChange()
 
@@ -103,10 +114,16 @@ class LCD:
 
     def main(self):
         self.setAllPinsToOutput()
+        if self.debug: print('Initializing Stage 1')
         self.write8bits(self.initialize_stage1, self.pin_rs_cmd)
+        if self.debug: print('Initializing Stage 2')
         self.write8bits(self.initialize_stage2, self.pin_rs_cmd)
+        if self.debug: print('Setting matrix size')
         self.write8bits(self.matrix, self.pin_rs_cmd)
-        self.write8bits(self.cursor_off, self.pin_rs_cmd)
+        if self.debug: print('Setting Cursor')
+        self.write8bits(self.cursor_on, self.pin_rs_cmd)
+        if self.debug: print('Shifting Cursor to the Right')
+        self.write8bits(self.shift_cursor_right, self.pin_rs_cmd)
 
             
 
