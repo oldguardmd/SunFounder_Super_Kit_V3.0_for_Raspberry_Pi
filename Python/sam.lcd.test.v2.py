@@ -16,9 +16,12 @@ class LCD:
     lcd_d6 = 16
     lcd_d7 = 12
 
-    #Common Hex Values for 
+    #Common Hex Values for 1602 operations
     initialize_stage1 = 0x33
     initialize_stage2 = 0x32
+    matrix = 0x28             # 2 line 5x7 Matrix
+    cursor_off = 0x0C         # Cursor Off
+    cursor_on = 0x0E          # Cursor On
     #Time
     onesecond = 1000000 # Number of microseconds in a second
 
@@ -83,8 +86,8 @@ class LCD:
         print(f'writing: {bin_bits[4:]}')
         self.write4bits(fourBits=bin_bits[4:])
         self.enableChange()
-        exit() 
         #Write low bits
+        print(f'writing: {bin_bits[:4]}')
         self.write4bits(fourBits=bin_bits[:4])
         self.enableChange()
 
@@ -94,6 +97,8 @@ class LCD:
         self.setAllPinsToOutput()
         self.write8bits(self.initialize_stage1, self.pin_rs_cmd)
         self.write8bits(self.initialize_stage2, self.pin_rs_cmd)
+        self.write8bits(self.matrix, self.pin_rs_cmd)
+        self.write8bits(self.cursor_off, self.pin_rs_cmd)
 
             
 
