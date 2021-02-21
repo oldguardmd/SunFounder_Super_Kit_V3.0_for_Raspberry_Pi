@@ -110,11 +110,11 @@ class LCD:
 
         #Write high bits
         if self.debug: print(f'\twriting: {bin_bits[:4]}')
-        self.write4bits(fourBits=bin_bits[4:])
+        self.write4bits(fourBits=bin_bits[:4])
         self.enableChange()
         #Write low bits
         if self.debug: print(f'\twriting: {bin_bits[4:]}')
-        self.write4bits(fourBits=bin_bits[:4])
+        self.write4bits(fourBits=bin_bits[4:])
         self.enableChange()
 
         return
