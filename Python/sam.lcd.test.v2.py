@@ -54,6 +54,7 @@ class LCD:
         #This does not right the register. We assume enable is 0
         for name, pin in self.full_pin_list.items():
             if str(name).startswith('lcd'):
+                if self.debug: print(f'Clearing {name}')
                 self.GPIO.output(pin,False)
         return
     
@@ -99,7 +100,7 @@ class LCD:
         sleep(0.0005)
         #sleep(1/self.onesecond) # Sleep one microsecond
         self.GPIO.output(self.pin_e, False)
-        sleep(0.0005)
+        sleep(10)
         #sleep(1/self.onesecond) # Sleep one microsecond
         return
 
