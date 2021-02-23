@@ -90,6 +90,8 @@ class LCD:
             self.GPIO.output(self.lcd_d7, True)
         else:
             if self.debug : print(f'\t\tSetting D7 to False')
+        
+        self.enableChange()
     
     def enableChange(self):
         # This sets the enable flag so that the 1602 reads the change
