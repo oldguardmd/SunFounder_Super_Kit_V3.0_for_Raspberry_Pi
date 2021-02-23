@@ -53,8 +53,8 @@ class LCD:
         #Basic house keeping to clear four bits to 0s before we set them.
         #This does not right the register. We assume enable is 0
         for name, pin in self.full_pin_list.items():
-            if str(name).startswith('lcd'):
-                if self.debug: print(f'Clearing {name}')
+            if str(name).startswith('d'):
+                if self.debug: print(f'\tClearing {name}')
                 self.GPIO.output(pin,False)
         return
     
@@ -102,8 +102,9 @@ class LCD:
         sleep(0.0005)
         #sleep(1/self.onesecond) # Sleep one microsecond
         self.GPIO.output(self.pin_e, False)
-        sleep(10)
+        sleep(0.0005)
         #sleep(1/self.onesecond) # Sleep one microsecond
+        if self.debug: input('Press enter to continue')
         return
 
     def main(self):
@@ -128,19 +129,39 @@ class LCD:
         #if self.debug: print('Clearing the display')
         #self.write8bits(self.LCD_clear_display, self.pin_rs_cmd)
 
+        if self.debug : print(f'Setting Initialization - Part 1')
         self.write4bits(0x03, self.pin_rs_cmd)
+        if self.debug : print(f'Setting Initialization - Part 2')
         self.write4bits(0x03, self.pin_rs_cmd)
+        if self.debug : print(f'Setting Initialization - Part 3')
         self.write4bits(0x03, self.pin_rs_cmd)
+        
+        if self.debug : print(f'Set 4 Bit mode')
         self.write4bits(0x02, self.pin_rs_cmd)
         
+        if self.debug : print(f'Function Set')
         self.write4bits(0x02, self.pin_rs_cmd)
-        #self.write4bits(0x03, self.pin_rs_cmd)
+        if self.debug : print(f'Font and Row Settings')
+        self.write4bits(0x00, self.pin_rs_cmd)
 
+        if self.debug : print(f'Combined two rows set display, cursor and blink')
+        self.write4bits(0x00, self.pin_rs_cmd)
+        self.write4bits(0x0E, self.pin_rs_cmd)      # Display on, cursor on, cursor blink
+        
+        if self.debug : print(f'Entry Mode Set')
         self.write4bits(0x00, self.pin_rs_cmd)
         self.write4bits(0x06, self.pin_rs_cmd)
+        
+        if self.debug : print(f'Entry Mode Set')
+        self.write4bits(0x00, self.pin_rs_cmd)
+        self.write4bits(0x02, self.pin_rs_cmd)
+
 
         self.write4bits(0x05, self.pin_rs_data)
         self.write4bits(0x03, self.pin_rs_data)
+
+        self.write4bits(0x06, self.pin_rs_data)
+        self.write4bits(0x01, self.pin_rs_data)
 
 
         sleep(.0005)
