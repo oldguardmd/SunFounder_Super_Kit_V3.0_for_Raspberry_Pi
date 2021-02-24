@@ -29,7 +29,7 @@ class LCD:
     onesecond = 1000000 # Number of microseconds in a second
 
     #Debugging Output
-    debug = True
+    debug = False
 
     def __init__(self):
         import RPi.GPIO as GPIO
@@ -65,7 +65,7 @@ class LCD:
         #we need to set either commands or data.
         self.GPIO.output(self.pin_rs, mode)
 
-        print('\t\tStarting 4 bit write process')
+        if self.debug : print('\t\tStarting 4 bit write process')
         if self.debug: print(f'\t\tD4 value is {fourBits[3]}')
         if int(fourBits[3]) == 1:
             if self.debug : print(f'\t\tSetting D4 to True')
@@ -146,7 +146,7 @@ class LCD:
 
         if self.debug : print(f'Combined two rows set display, cursor and blink')
         self.write4bits(0x00, self.pin_rs_cmd)
-        self.write4bits(0x0E, self.pin_rs_cmd)      # Display on, cursor on, cursor blink
+        self.write4bits(0x0F, self.pin_rs_cmd)      # Display on, cursor on, cursor blink
         
         if self.debug : print(f'Entry Mode Set')
         self.write4bits(0x00, self.pin_rs_cmd)
@@ -157,11 +157,18 @@ class LCD:
         self.write4bits(0x02, self.pin_rs_cmd)
 
 
-        self.write4bits(0x05, self.pin_rs_data)
-        self.write4bits(0x03, self.pin_rs_data)
+        #self.write4bits(0x05, self.pin_rs_data)
+        #self.write4bits(0x03, self.pin_rs_data)
 
-        self.write4bits(0x06, self.pin_rs_data)
-        self.write4bits(0x01, self.pin_rs_data)
+        #self.write4bits(0x06, self.pin_rs_data)
+        #self.write4bits(0x01, self.pin_rs_data)
+
+        message = "Sam was here"
+        for letter in message:
+            inUnicode = int(ord(letter))
+            inBinary = bin(inUnicode)[2:].zfill(8)
+            self.write4bits(int(inBinary[:4], 2), self.pin_rs_data)
+            self.write4bits(int(inBinary[4:], 2), self.pin_rs_data)
 
 
         sleep(.0005)
