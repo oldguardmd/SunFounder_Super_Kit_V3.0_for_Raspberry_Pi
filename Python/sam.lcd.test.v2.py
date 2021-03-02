@@ -142,7 +142,7 @@ class LCD:
         if self.debug : print(f'Function Set')
         self.write4bits(0x02, self.pin_rs_cmd)
         if self.debug : print(f'Font and Row Settings')
-        self.write4bits(0x00, self.pin_rs_cmd)
+        self.write4bits(0x01, self.pin_rs_cmd)
 
         if self.debug : print(f'Combined two rows set display, cursor and blink')
         self.write4bits(0x00, self.pin_rs_cmd)
