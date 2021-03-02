@@ -163,7 +163,7 @@ class LCD:
         #self.write4bits(0x06, self.pin_rs_data)
         #self.write4bits(0x01, self.pin_rs_data)
 
-        message = "Sam was here"
+        message = "Sam was here!"
         for letter in message:
             inUnicode = int(ord(letter))
             inBinary = bin(inUnicode)[2:].zfill(8)
