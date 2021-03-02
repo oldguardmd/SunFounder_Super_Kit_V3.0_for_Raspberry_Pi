@@ -29,7 +29,7 @@ class LCD:
     onesecond = 1000000 # Number of microseconds in a second
 
     #Debugging Output
-    debug = False
+    debug = True
 
     def __init__(self):
         import RPi.GPIO as GPIO
@@ -142,7 +142,9 @@ class LCD:
         if self.debug : print(f'Function Set')
         self.write4bits(0x02, self.pin_rs_cmd)
         if self.debug : print(f'Font and Row Settings')
-        self.write4bits(0x01, self.pin_rs_cmd)
+        self.write4bits(0x09, self.pin_rs_cmd)
+        # To only turn on the first line
+        # self.write4bits(0x09x, self.pin_rs_cmd)
 
         if self.debug : print(f'Combined two rows set display, cursor and blink')
         self.write4bits(0x00, self.pin_rs_cmd)
@@ -163,16 +165,41 @@ class LCD:
         #self.write4bits(0x06, self.pin_rs_data)
         #self.write4bits(0x01, self.pin_rs_data)
 
-        message = "Sam was here!"
+        if self.debug : print(f'Clear Display')
+        self.write4bits(0x00, self.pin_rs_cmd)
+        self.write4bits(0x01, self.pin_rs_cmd)
+        
+        #Write to first line
+        message = "Water Out: 100"
         for letter in message:
             inUnicode = int(ord(letter))
             inBinary = bin(inUnicode)[2:].zfill(8)
             self.write4bits(int(inBinary[:4], 2), self.pin_rs_data)
             self.write4bits(int(inBinary[4:], 2), self.pin_rs_data)
 
+        #Write to second line - First write the address for the first charactor of the second line.
+        # Memory Address of second row, first block - 1
+        memoryAddress = bin(0x40)[2:].zfill(8)
+        
+
+        self.write4bits(int(memoryAddress[:4], 2), self.pin_rs_cmd)
+        self.write4bits(int(memoryAddress[4:], 2), self.pin_rs_cmd)
+        
+        message = "Water In: 100"
+        for letter in message:
+            inUnicode = int(ord(letter))
+            inBinary = bin(inUnicode)[2:].zfill(8)
+            self.write4bits(int(inBinary[:4], 2), self.pin_rs_data)
+            self.write4bits(int(inBinary[4:], 2), self.pin_rs_data)
+
+        exit()
+
+
+
 
         sleep(.0005)
         # Everything after this is what you want to display 
+        
         
 
             
